@@ -5,8 +5,8 @@
 %bcond_with tests
 
 Name:           python%{python3_pkgversion}-urllib3
-Version:        1.26.18
-Release:        2%{?dist}
+Version:        1.26.19
+Release:        1%{?dist}
 Summary:        HTTP library with thread-safe connection pooling, file post, and more
 
 # SPDX
@@ -130,6 +130,10 @@ ignore="${ignore-} --ignore=test/test_no_ssl.py"
 
 
 %changelog
+* Wed Sep 25 2024 Lumír Balhar <lbalhar@redhat.com> - 1.26.19-1
+- Rebase to 1.26.19 to fix CVE-2024-37891
+Resolves: RHEL-59989
+
 * Tue Jan 23 2024 Miro Hrončok <mhroncok@redhat.com> - 1.26.18-2
 - Rebuilt for timestamp .pyc invalidation mode
 
