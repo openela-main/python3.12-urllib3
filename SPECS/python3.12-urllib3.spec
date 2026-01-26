@@ -6,13 +6,16 @@
 
 Name:           python%{python3_pkgversion}-urllib3
 Version:        1.26.19
-Release:        1%{?dist}
+Release:        1%{?dist}.1
 Summary:        HTTP library with thread-safe connection pooling, file post, and more
 
 # SPDX
 License:        MIT
 URL:            https://github.com/urllib3/urllib3
 Source:         %{url}/archive/%{version}/urllib3-%{version}.tar.gz
+Patch1:         CVE-2025-66471.patch
+Patch2:         CVE-2025-66418.patch
+Patch3:         CVE-2026-21441.patch
 
 BuildArch:      noarch
 
@@ -72,7 +75,7 @@ many critical features that are missing from the Python standard libraries:
 
 
 %prep
-%autosetup -n urllib3-%{version}
+%autosetup -p1 -n urllib3-%{version}
 # Make sure that the RECENT_DATE value doesn't get too far behind what the current date is.
 # RECENT_DATE must not be older that 2 years from the build time, or else test_recent_date
 # (from test/test_connection.py) would fail. However, it shouldn't be to close to the build time either,
@@ -130,6 +133,12 @@ ignore="${ignore-} --ignore=test/test_no_ssl.py"
 
 
 %changelog
+* Tue Dec 16 2025 Miro Hrončok <mhroncok@redhat.com> - 1.26.19-1.1
+- Security fix for CVE-2025-66471
+- Security fix for CVE-2025-66418
+- Security fix for CVE-2026-21441
+Resolves: RHEL-139403
+
 * Wed Sep 25 2024 Lumír Balhar <lbalhar@redhat.com> - 1.26.19-1
 - Rebase to 1.26.19 to fix CVE-2024-37891
 Resolves: RHEL-59998
