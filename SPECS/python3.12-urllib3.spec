@@ -6,7 +6,7 @@
 
 Name:           python%{python3_pkgversion}-urllib3
 Version:        1.26.19
-Release:        1%{?dist}.1
+Release:        3%{?dist}
 Summary:        HTTP library with thread-safe connection pooling, file post, and more
 
 # SPDX
@@ -16,6 +16,8 @@ Source:         %{url}/archive/%{version}/urllib3-%{version}.tar.gz
 Patch1:         CVE-2025-66471.patch
 Patch2:         CVE-2025-66418.patch
 Patch3:         CVE-2026-21441.patch
+Patch4:         CVE-2026-44431.patch
+Patch5:         CVE-2026-44432.patch
 
 BuildArch:      noarch
 
@@ -133,11 +135,16 @@ ignore="${ignore-} --ignore=test/test_no_ssl.py"
 
 
 %changelog
-* Tue Dec 16 2025 Miro Hrončok <mhroncok@redhat.com> - 1.26.19-1.1
+* Wed Jun 03 2026 Tomáš Hrnčiar <thrnciar@redhat.com> - 1.26.19-3
+- Security fix for CVE-2026-44431
+- Security fix for CVE-2026-44432
+Resolves: RHEL-184901, RHEL-185126
+
+* Tue Jan 27 2026 Miro Hrončok <mhroncok@redhat.com> - 1.26.19-2
 - Security fix for CVE-2025-66471
 - Security fix for CVE-2025-66418
 - Security fix for CVE-2026-21441
-Resolves: RHEL-139403
+Resolves: RHEL-142909, RHEL-139399, RHEL-142922
 
 * Wed Sep 25 2024 Lumír Balhar <lbalhar@redhat.com> - 1.26.19-1
 - Rebase to 1.26.19 to fix CVE-2024-37891
