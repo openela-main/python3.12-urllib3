@@ -6,7 +6,7 @@
 
 Name:           python%{python3_pkgversion}-urllib3
 Version:        1.26.19
-Release:        2%{?dist}
+Release:        3%{?dist}
 Summary:        HTTP library with thread-safe connection pooling, file post, and more
 
 # SPDX
@@ -16,6 +16,19 @@ Source:         %{url}/archive/%{version}/urllib3-%{version}.tar.gz
 Patch1:         CVE-2025-66471.patch
 Patch2:         CVE-2025-66418.patch
 Patch3:         CVE-2026-21441.patch
+
+# CVE-2026-44431
+# Sensitive headers were stripped on cross-host redirects by PoolManager but not
+# by pools obtained via ProxyManager.connection_from_url(), allowing headers such
+# as Authorization, Cookie and Proxy-Authorization to leak to the redirected host.
+# Upstream fix: https://github.com/urllib3/urllib3/commit/5ec0de49
+Patch4:         CVE-2026-44431.patch
+
+# CVE-2026-44432
+# drain_conn() after a partial decoded read would decompress all remaining
+# response data, enabling a decompression-bomb DoS against the client.
+# Upstream fix: https://github.com/urllib3/urllib3/security/advisories/GHSA-mf9v-mfxr-j63j
+Patch5:         CVE-2026-44432.patch
 
 BuildArch:      noarch
 
@@ -133,6 +146,10 @@ ignore="${ignore-} --ignore=test/test_no_ssl.py"
 
 
 %changelog
+* Wed Jun 03 2026 Lumír Balhar <lbalhar@redhat.com> - 1.26.19-3
+- Security fixes for CVE-2026-44431 and CVE-2026-44432
+Resolves: RHEL-185125, RHEL-184900
+
 * Tue Dec 16 2025 Miro Hrončok <mhroncok@redhat.com> - 1.26.19-2
 - Security fix for CVE-2025-66471
 - Security fix for CVE-2025-66418
