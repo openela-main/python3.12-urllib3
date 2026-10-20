@@ -6,7 +6,7 @@
 
 Name:           python%{python3_pkgversion}-urllib3
 Version:        1.26.19
-Release:        3%{?dist}
+Release:        3%{?dist}.2
 Summary:        HTTP library with thread-safe connection pooling, file post, and more
 
 # SPDX
@@ -18,6 +18,11 @@ Patch2:         CVE-2025-66418.patch
 Patch3:         CVE-2026-21441.patch
 Patch4:         CVE-2026-44431.patch
 Patch5:         CVE-2026-44432.patch
+# https://github.com/urllib3/urllib3/commit/b6447295fff7b38fdffc67e0df9712d60cef3cc3
+# https://github.com/urllib3/urllib3/commit/07408cec79d1856d81bb42c74a904a24fdb9e465
+Patch6:         CVE-2026-97687.patch
+# https://github.com/urllib3/urllib3/commit/cd770b059b543be29298ea5c52afb0b1b090f5ed
+Patch7:         CVE-2026-97689.patch
 
 BuildArch:      noarch
 
@@ -135,6 +140,16 @@ ignore="${ignore-} --ignore=test/test_no_ssl.py"
 
 
 %changelog
+* Thu Oct 15 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.26.19-3.2
+- CVE-2026-97689 python3.12-urllib3: urllib3: Denial of Service via
+  unbounded memory allocation in chunk parser
+Resolves: RHEL-282261
+
+* Wed Oct 14 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.26.19-3.1
+- CVE-2026-97687 python3.12-urllib3: urllib3: Traffic interception via HTTPS proxy TLS configuration override
+  HTTPS proxy TLS configuration override
+Resolves: RHEL-282321
+
 * Wed Jun 03 2026 Tomáš Hrnčiar <thrnciar@redhat.com> - 1.26.19-3
 - Security fix for CVE-2026-44431
 - Security fix for CVE-2026-44432
