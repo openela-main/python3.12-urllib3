@@ -6,7 +6,7 @@
 
 Name:           python%{python3_pkgversion}-urllib3
 Version:        1.26.19
-Release:        3%{?dist}
+Release:        5%{?dist}
 Summary:        HTTP library with thread-safe connection pooling, file post, and more
 
 # SPDX
@@ -29,6 +29,13 @@ Patch4:         CVE-2026-44431.patch
 # response data, enabling a decompression-bomb DoS against the client.
 # Upstream fix: https://github.com/urllib3/urllib3/security/advisories/GHSA-mf9v-mfxr-j63j
 Patch5:         CVE-2026-44432.patch
+
+# https://github.com/urllib3/urllib3/commit/b6447295fff7b38fdffc67e0df9712d60cef3cc3
+# https://github.com/urllib3/urllib3/commit/07408cec79d1856d81bb42c74a904a24fdb9e465
+Patch6:         CVE-2026-97687.patch
+
+# https://github.com/urllib3/urllib3/commit/cd770b059b543be29298ea5c52afb0b1b090f5ed
+Patch7:         CVE-2026-97689.patch
 
 BuildArch:      noarch
 
@@ -146,6 +153,14 @@ ignore="${ignore-} --ignore=test/test_no_ssl.py"
 
 
 %changelog
+* Thu Oct 15 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.26.19-5
+- CVE-2026-97689 Denial of Service via unbounded memory allocation in chunk parser
+Resolves: RHEL-282256
+
+* Wed Oct 14 2026 RHEL Packaging Agent <redhat-ymir-agent@redhat.com> - 1.26.19-4
+- CVE-2026-97687 Traffic interception via HTTPS proxy TLS configuration override
+Resolves: RHEL-282315
+
 * Wed Jun 03 2026 Lumír Balhar <lbalhar@redhat.com> - 1.26.19-3
 - Security fixes for CVE-2026-44431 and CVE-2026-44432
 Resolves: RHEL-185125, RHEL-184900
